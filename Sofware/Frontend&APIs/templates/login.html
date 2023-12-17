@@ -1,13 +1,16 @@
 <html>
     <head>
         <title>Login</title>
+        <link rel="stylesheet" href="static/loginStyles.css">
     </head>
     <body>
+        <img src="static/logo.png" alt="">
         <form action="/login" method="post">
             <input type="text" name="username" placeholder="Username or email address">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Login">
+            <input type="password" name="password" placeholder="Password"><br><br>
+            <input type="submit" value="Login" class="btn">
         </form>
+        <a href="/sign-up"><p>Don't have an account?  <br> <big>Sign up</big> from here.</p></a>
         <p>{{message}}</p>
     </body>
 </html>
