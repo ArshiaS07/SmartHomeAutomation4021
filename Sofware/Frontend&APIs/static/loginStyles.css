@@ -3,7 +3,7 @@ img{
     margin-left: 20%;
 }
 body{
-    background-color:rgb(4, 59, 71);
+    background-color: rgba(23,25,46,255);
 }
 input{
     margin-left: 25%;
@@ -13,7 +13,7 @@ input{
     border-radius: 10px;
 }
 .btn{
-    background-color:tomato;
+    background-color: rgba(48,199,252,255);
     border: none;
     color: aliceblue;
     font-size: large;
@@ -30,5 +30,5 @@ a p{
     text-decoration: none;
 }
 big{
-    color:tomato;
+    color:khaki;
 }
