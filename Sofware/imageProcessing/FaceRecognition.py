@@ -1,9 +1,9 @@
-import cv2
 import numpy as np
 import os
+import cv2 
 
 # Initialize the face recognition confidence threshold
-confidence_threshold = 50  # Decreased threshold for stricter matching
+confidence_threshold = 55  # Decreased threshold for stricter matching
 
 def train_model():
     face_recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -22,7 +22,11 @@ def train_model():
         os.makedirs(model_save_path)
     face_recognizer.save(os.path.join(model_save_path, 'face_recognizer_model.xml'))
 
-def face_recognition():
+    # Create and save unique_labels.npy
+    unique_labels_path = os.path.abspath(os.path.join('captured_images', 'unique_labels.npy'))
+    np.save(unique_labels_path, unique_labels)
+
+def face_recognition(model_trained):
     global confidence_threshold  # Make confidence_threshold a global variable
 
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -85,10 +89,12 @@ def face_recognition():
 
 def get_username(label):
     # Assuming label corresponds to the index in unique_labels
-    unique_labels = np.load('captured_images/unique_labels.npy')
+    unique_labels_path = os.path.abspath(os.path.join('captured_images', 'unique_labels.npy'))
+    unique_labels = np.load(unique_labels_path)
+
     return unique_labels[label]
 
 if __name__ == "__main__":
     train_model()  # Train the model first
     model_trained = True  # Set the flag indicating that the model is trained
-    face_recognition()  # Start face recognition
+    face_recognition(model_trained)  # Start face recognition
