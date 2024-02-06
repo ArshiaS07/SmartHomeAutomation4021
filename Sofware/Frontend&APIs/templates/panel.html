@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Panel</title>
+        <link rel="stylesheet" href="static/panelStyles.css">
+    </head>
+    <body>
+      <script type="text/javascript" src="static/code.js"></script>
+      <form action="/panel">
+        <p>Light switch</p>
+        <label class="switch">
+          {%if lightStatus == 1%}
+            <input type="checkbox" name = "light" id="light" value="on" checked>
+          {%else%}
+            <input type="checkbox" name = "light" id="light" value="on">
+          {%endif%}
+          <span class="slider round"></span>
+        </label><br><br>
+        <input type="checkbox" name="partyDigital" id="myCheckbox">
+        <label for="myCheckbox">Enable Party mode</label>
+        <br>
+        <input type="range" name="partyAnolog" id="mySlider" disabled>
+        <br>
+        <p>Water valve</p>
+        <label class="switch">
+          {%if waterStatus == 1%}
+            <input type="checkbox" name = "water" id="water" value="on" checked>
+          {%else%}
+            <input type="checkbox" name = "water" id="water" value="on">
+          {%endif%}
+            <span class="slider round"></span>
+        </label><br><br>
+        <input type="checkbox" name="waterDigital" id="waterDigital">
+        <label for="waterDigital">Change water flow rate</label>
+        <br>
+        <input type="range" name="waterAnolog" id="waterAnolog" disabled>
+        <br>
+        <p>Gas valve</p>
+        <label class="switch">
+          {%if gasStatus == 1%}
+            <input type="checkbox" name = "gas" id="gas" value="on" checked>
+          {%else%}
+            <input type="checkbox" name = "gas" id="gas" value="on">
+          {%endif%}
+            <span class="slider round"></span>
+        </label><br><br>
+        <input type="checkbox" name="gasDigital" id="gasDigital">
+        <label for="gasDigital">Change gas flow rate</label>
+        <br>
+        <input type="range" name="gasAnolog" id="gasAnolog" disabled>
+        <br>
+        <input type="submit"><br><br>
+        <a href="/doorOpen"><button type="button">Open the door</button></a><br>
+        <a href="/doorClose"><button type="button">Close the door</button></a>
+      </form>
+    </body>
+</html>
