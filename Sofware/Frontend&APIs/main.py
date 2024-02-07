@@ -1,10 +1,11 @@
-from flask import Flask , render_template , session
+from flask import Flask , render_template , session , flash
 from flask import request , redirect , url_for , jsonify
 from flask_mail import Mail , Message
 import pandas as pd
 import os
 from connect import *
-
+import voice_assistant
+from IPs import *
 
 app = Flask(__name__)
 app.secret_key = '1234'
@@ -83,7 +84,30 @@ def login():
 
         return render_template("login.html" , message = message)
 
-
+@app.route("/panel" , methods = ["POST" , "GET"])
+def panel():
+    if "username" in session:
+        result = ""
+        lightStatus = 0
+        waterStatus = 0
+        gasStatus = 0
+        if request.method == "POST":
+            light = request.form["light"]
+            """
+            if request.form["light"] == "on":
+                lightStatus = 1
+                thread = threading.Thread(target=send_data , args = (lightStatus , "ws://192.168.43.156:81"))
+                thread.start()
+                print(lightStatus , request.args.get("light"))
+            if request.form["light"] == None:
+                lightStatus = 0
+                thread = threading.Thread(target=send_data , args = (lightStatus , "ws://192.168.43.156:81"))
+                thread.start()
+                print(lightStatus , request.args.get("light"))"""
+        return render_template("panel.html" , lightStatus = lightStatus , waterStatus = waterStatus , gasStatus = gasStatus)
+    else:
+        return redirect("/login")
+"""
 @app.route("/panel" , methods = ["POST" , "GET"])
 def panel():
     if "username" in session:
@@ -95,53 +119,58 @@ def panel():
 
             if request.args.get("light") == "on":
                 lightStatus = 1
-                thread = threading.Thread(target=send_data , args = (lightStatus , "ws://192.168.168.49:81"))
+                thread = threading.Thread(target=send_data , args = (lightStatus , IP["light"]))
                 thread.start()
                 print(lightStatus , request.args.get("light"))
-            elif request.args.get("light") == None:
+            if request.args.get("light") == None:
                 lightStatus = 0
-                thread = threading.Thread(target=send_data , args = (lightStatus , "ws://192.168.168.49:81"))
+                thread = threading.Thread(target=send_data , args = (lightStatus , IP["light"]))
                 thread.start()
                 print(lightStatus , request.args.get("light"))
+
             if request.args.get("water") == "on":
                 waterStatus = 1
-                thread = threading.Thread(target=send_data , args = (waterStatus , "water IP"))
+                thread = threading.Thread(target=send_data , args = (waterStatus , IP["water"]))
                 thread.start()
                 print(waterStatus , request.args.get("water"))
-            elif request.args.get("water") == None:
+            if request.args.get("water") == None:
                 waterStatus = 0
-                thread = threading.Thread(target=send_data , args = (waterStatus , "water IP"))
+                thread = threading.Thread(target=send_data , args = (waterStatus , IP["water"]))
                 thread.start()
                 print(waterStatus , request.args.get("water"))
+
             if request.args.get("gas") == "on":
                 gasStatus = 1
-                thread = threading.Thread(target=send_data , args = (gasStatus , "gas IP"))
+                thread = threading.Thread(target=send_data , args = (gasStatus , IP["gas"]))
                 thread.start()
                 print(gasStatus , request.args.get("gas"))
-            elif request.args.get("gas") == None:
+
+            if request.args.get("gas") == None:
                 gasStatus = 0
-                thread = threading.Thread(target=send_data , args = (gasStatus , "gas IP"))
+                thread = threading.Thread(target=send_data , args = (gasStatus , IP["gas"]))
                 thread.start()
                 print(gasStatus , request.args.get("gas"))
+
 
             if request.args.get("partyDigital") == "on":
-                thread = threading.Thread(target=send_data , args = (request.args.get("partyAnolog") , "ws://192.168.168.49:81"))
+                thread = threading.Thread(target=send_data , args = (request.args.get("partyAnolog") , IP["light"]))
                 thread.start()
-                print(request.args.get("partyAnolog"))
+                print(type(request.args.get("partyAnolog")))
 
             if request.args.get("waterDigital") == "on":
-                thread = threading.Thread(target=send_data , args = (request.args.get("waterAnolog") , "water IP"))
+                thread = threading.Thread(target=send_data , args = (request.args.get("waterAnolog") , IP["water"]))
                 thread.start()
                 print(request.args.get("waterAnolog"))
 
             if request.args.get("gasDigital") == "on":
-                thread = threading.Thread(target=send_data , args = (request.args.get("gasAnolog") , "gas IP"))
+                thread = threading.Thread(target=send_data , args = (request.args.get("gasAnolog") , IP["gas"]))
                 thread.start()
                 print(request.args.get("gasAnolog"))
 
         return render_template("panel.html" , lightStatus = lightStatus , waterStatus = waterStatus , gasStatus = gasStatus)
     else:
         return redirect("/login")
+"""
 
 @app.route("/doorOpen")
 def doorOpen():
@@ -160,6 +189,29 @@ def doorclose():
         thread.start()
         print("Door is closed")
         return redirect("/panel")
+    else:
+        return redirect("/login")
+
+
+@app.route("/assistant")
+def assistant():
+    if "username" in session:
+        return render_template("assistant.html")
+    else:
+        return redirect("/login")
+
+@app.route("/assistant_process")
+def assistant_process():
+    if "username" in session:
+        #voice_assistant.main()
+        while True:
+            audio = voice_assistant.capture_voice_input()
+            text = voice_assistant.convert_voice_to_text(audio)
+            end_program = voice_assistant.process_voice_command(text)
+            if end_program is not None:
+                break
+        print(end_program)
+        return redirect("/assistant")
     else:
         return redirect("/login")
 
