@@ -1,11 +1,21 @@
 <html>
     <head>
-        <title>Panel</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Control Panel</title>
         <link rel="stylesheet" href="static/panelStyles.css">
     </head>
     <body>
       <script type="text/javascript" src="static/code.js"></script>
-      <form action="/panel">
+      <div class="header">
+          <nav class="navigation">
+              <a href="/profile">Profile</a>
+              <a href="/panel" style="color: #28a9e5;">Control Panel</a>
+              <a href="/assistant">Voice Assistant</a>
+          </nav>
+      </div>
+      <form action="/panel" method="post">
+        <div class="wrapper">
         <p>Light switch</p>
         <label class="switch">
           {%if lightStatus == 1%}
@@ -18,7 +28,7 @@
         <input type="checkbox" name="partyDigital" id="myCheckbox">
         <label for="myCheckbox">Enable Party mode</label>
         <br>
-        <input type="range" name="partyAnolog" id="mySlider" disabled>
+        <input type="range" name="partyAnolog" min="2" max="100" id="mySlider" disabled>
         <br>
         <p>Water valve</p>
         <label class="switch">
@@ -32,7 +42,7 @@
         <input type="checkbox" name="waterDigital" id="waterDigital">
         <label for="waterDigital">Change water flow rate</label>
         <br>
-        <input type="range" name="waterAnolog" id="waterAnolog" disabled>
+        <input type="range" name="waterAnolog" min="2" max="100" id="waterAnolog" disabled>
         <br>
         <p>Gas valve</p>
         <label class="switch">
@@ -46,9 +56,9 @@
         <input type="checkbox" name="gasDigital" id="gasDigital">
         <label for="gasDigital">Change gas flow rate</label>
         <br>
-        <input type="range" name="gasAnolog" id="gasAnolog" disabled>
-        <br>
-        <input type="submit"><br><br>
+        <input type="range" name="gasAnolog" min="2" max="100" id="gasAnolog" disabled>
+      </div>
+        <input type="submit" class="btn">
         <a href="/doorOpen"><button type="button">Open the door</button></a><br>
         <a href="/doorClose"><button type="button">Close the door</button></a>
       </form>

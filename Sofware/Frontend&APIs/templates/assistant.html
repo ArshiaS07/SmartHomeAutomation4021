@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Voice Assistant</title>
+    <link rel="stylesheet" href="static/assistantStyles.css">
+  </head>
+  <body>
+    <div class="total">
+    <div class="header">
+        <nav class="navigation">
+            <a href="/profile">Profile</a>
+            <a href="/panel">Control Panel</a>
+            <a href="/assistant_page" style="color: #28a9e5;">Voice Assistant</a>
+        </nav>
+    </div>
+    <h1>How can I help you?</h1>
+    <div style="display: block;">
+        <a href="/assistant_process"><button id="myButton">Click me</button></a>
+        <div class="message hidden" id="message">Listening...</div>
+    </div>
+  </div>
+    <script>
+    document.getElementById('myButton').addEventListener('click', function() {
+        document.getElementById('message').className = 'visible';
+    });
+    </script>
+  </body>
+</html>
