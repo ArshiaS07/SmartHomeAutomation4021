@@ -14,7 +14,13 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
   if (type == WStype_TEXT) {
     String receivedMessage = String((char*)payload);
     Desired = receivedMessage.toInt();
+    if (Desired >= 2){
+      Desired = map(Desired, 2, 100, 25, 5000);
+    }
+    
+
     Serial.println(Desired);
+    
     // Serial.println("Received message: " + receivedMessage);
     // if (receivedMessage.equals("1")) {
     //   digitalWrite(ledPin, HIGH);  // Turn on the LED
@@ -59,4 +65,4 @@ void setup() {
   // Serial.println(time2-time1);
 
 
-}
+}  // put your main code here, to run repeatedly:
