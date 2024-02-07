@@ -12,11 +12,11 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 100px;
+    padding: 20px 10px;
     display: flex ;
     justify-content: space-between;
     align-items: center;
-    
+
 
 }
 body{
@@ -35,7 +35,7 @@ body{
     font-weight: 500;
     cursor: pointer;
     margin-left: 20px;
-    
+
 }
 
 .wrapper h2{
@@ -136,4 +136,3 @@ p{
     height: 20px;
     background-color: black;
 }
-
